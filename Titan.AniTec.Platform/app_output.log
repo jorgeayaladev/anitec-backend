@@ -1,0 +1,293 @@
+Usando la configuración de inicio de C:\Users\jayal\OneDrive\Escritorio\Projects\titan\anitec-backend\anitec-platform\Titan.AniTec.Platform\Properties\launchSettings.json...
+Compilando...
+warn: Microsoft.EntityFrameworkCore.Model.Validation[10400]
+      Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (11ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE DATABASE `anitec_platform`
+info: Microsoft.EntityFrameworkCore.Migrations[20411]
+      Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT GET_LOCK('__EFMigrationsLock',-1);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (41ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE IF NOT EXISTS `__EFMigrationsHistory` (
+          `MigrationId` varchar(150) NOT NULL,
+          `ProductVersion` varchar(32) NOT NULL,
+          PRIMARY KEY (`MigrationId`)
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='anitec_platform' AND TABLE_NAME='__EFMigrationsHistory';
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT `MigrationId`, `ProductVersion`
+      FROM `__EFMigrationsHistory`
+      ORDER BY `MigrationId`;
+info: Microsoft.EntityFrameworkCore.Migrations[20402]
+      Applying migration '20260605181659_ProfileInitialCreate'.
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (41ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE `clinics` (
+          `id` int NOT NULL AUTO_INCREMENT,
+          `user_id` int NOT NULL,
+          `clinic_name` varchar(200) NOT NULL,
+          `address` varchar(500) NULL,
+          `city` varchar(100) NULL,
+          `state` varchar(100) NULL,
+          `country` varchar(100) NULL,
+          `postal_code` varchar(20) NULL,
+          `latitude` double NULL,
+          `longitude` double NULL,
+          `phone` varchar(20) NULL,
+          `email` varchar(200) NULL,
+          `description` varchar(2000) NULL,
+          `created_at` datetime NULL,
+          `updated_at` datetime NULL,
+          PRIMARY KEY (`id`)
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (44ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE `farms` (
+          `id` int NOT NULL AUTO_INCREMENT,
+          `user_id` int NOT NULL,
+          `farm_name` varchar(200) NOT NULL,
+          `farm_size` double NULL,
+          `address` varchar(500) NULL,
+          `city` varchar(100) NULL,
+          `state` varchar(100) NULL,
+          `country` varchar(100) NULL,
+          `postal_code` varchar(20) NULL,
+          `latitude` double NULL,
+          `longitude` double NULL,
+          `description` varchar(2000) NULL,
+          `created_at` datetime NULL,
+          `updated_at` datetime NULL,
+          PRIMARY KEY (`id`)
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (45ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE `notifications` (
+          `id` int NOT NULL AUTO_INCREMENT,
+          `user_id` int NOT NULL,
+          `type` varchar(50) NOT NULL,
+          `title` varchar(200) NOT NULL,
+          `message` varchar(2000) NOT NULL,
+          `is_read` tinyint(1) NOT NULL,
+          `read_at` datetime NULL,
+          `created_at` datetime NULL,
+          `updated_at` datetime NULL,
+          PRIMARY KEY (`id`)
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (39ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE `professional_licenses` (
+          `id` int NOT NULL AUTO_INCREMENT,
+          `clinic_id` int NOT NULL,
+          `license_number` varchar(100) NOT NULL,
+          `issuing_authority` varchar(200) NOT NULL,
+          `issue_date` datetime NULL,
+          `expiry_date` datetime NULL,
+          `is_verified` tinyint(1) NOT NULL,
+          `created_at` datetime NULL,
+          `updated_at` datetime NULL,
+          PRIMARY KEY (`id`)
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (40ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE `user_preferences` (
+          `id` int NOT NULL AUTO_INCREMENT,
+          `user_id` int NOT NULL,
+          `language` varchar(10) NOT NULL,
+          `theme` varchar(20) NOT NULL,
+          `notifications_enabled` tinyint(1) NOT NULL,
+          `email_notifications` tinyint(1) NOT NULL,
+          `push_notifications` tinyint(1) NOT NULL,
+          `sms_notifications` tinyint(1) NOT NULL,
+          `created_at` datetime NULL,
+          `updated_at` datetime NULL,
+          PRIMARY KEY (`id`)
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (41ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE `user_profiles` (
+          `id` int NOT NULL AUTO_INCREMENT,
+          `user_id` int NOT NULL,
+          `first_name` varchar(100) NOT NULL,
+          `last_name` varchar(100) NOT NULL,
+          `phone` varchar(20) NULL,
+          `avatar_url` varchar(500) NULL,
+          `bio` varchar(1000) NULL,
+          `created_at` datetime NULL,
+          `updated_at` datetime NULL,
+          PRIMARY KEY (`id`)
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (44ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE `users` (
+          `id` int NOT NULL AUTO_INCREMENT,
+          `username` varchar(50) NOT NULL,
+          `email` varchar(100) NOT NULL,
+          `role` varchar(30) NOT NULL,
+          `password_hash` longtext NOT NULL,
+          `is_active` tinyint(1) NOT NULL,
+          `email_verified` tinyint(1) NOT NULL,
+          `email_verified_at` datetime NULL,
+          `last_login_at` datetime NULL,
+          `created_at` datetime NULL,
+          `updated_at` datetime NULL,
+          PRIMARY KEY (`id`)
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (63ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE `clinic_availabilities` (
+          `id` int NOT NULL AUTO_INCREMENT,
+          `clinic_id` int NOT NULL,
+          `day_of_week` int NOT NULL,
+          `start_time` time(6) NOT NULL,
+          `end_time` time(6) NOT NULL,
+          `is_available` tinyint(1) NOT NULL,
+          PRIMARY KEY (`id`),
+          CONSTRAINT `fk_clinic_availabilities_clinics_clinic_id` FOREIGN KEY (`clinic_id`) REFERENCES `clinics` (`id`) ON DELETE CASCADE
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (63ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE `clinic_schedules` (
+          `id` int NOT NULL AUTO_INCREMENT,
+          `clinic_id` int NOT NULL,
+          `day_of_week` int NOT NULL,
+          `open_time` time(6) NOT NULL,
+          `close_time` time(6) NOT NULL,
+          `is_available` tinyint(1) NOT NULL,
+          PRIMARY KEY (`id`),
+          CONSTRAINT `fk_clinic_schedules_clinics_clinic_id` FOREIGN KEY (`clinic_id`) REFERENCES `clinics` (`id`) ON DELETE CASCADE
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (60ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE `service_area_locations` (
+          `id` int NOT NULL AUTO_INCREMENT,
+          `clinic_id` int NOT NULL,
+          `name` varchar(200) NOT NULL,
+          `address` varchar(500) NULL,
+          `latitude` double NULL,
+          `longitude` double NULL,
+          PRIMARY KEY (`id`),
+          CONSTRAINT `fk_service_area_locations_clinics_clinic_id` FOREIGN KEY (`clinic_id`) REFERENCES `clinics` (`id`) ON DELETE CASCADE
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (54ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE `specialties` (
+          `id` int NOT NULL AUTO_INCREMENT,
+          `clinic_id` int NOT NULL,
+          `name` varchar(200) NOT NULL,
+          `description` varchar(1000) NULL,
+          PRIMARY KEY (`id`),
+          CONSTRAINT `fk_specialties_clinics_clinic_id` FOREIGN KEY (`clinic_id`) REFERENCES `clinics` (`id`) ON DELETE CASCADE
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (75ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE `farm_certifications` (
+          `id` int NOT NULL AUTO_INCREMENT,
+          `farm_id` int NOT NULL,
+          `name` varchar(200) NOT NULL,
+          `issuing_authority` varchar(200) NOT NULL,
+          `issue_date` datetime NULL,
+          `expiry_date` datetime NULL,
+          `certification_number` varchar(100) NULL,
+          `created_at` datetime NULL,
+          `updated_at` datetime NULL,
+          PRIMARY KEY (`id`),
+          CONSTRAINT `fk_farm_certifications_farms_farm_id` FOREIGN KEY (`farm_id`) REFERENCES `farms` (`id`) ON DELETE CASCADE
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (58ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE `farm_locations` (
+          `id` int NOT NULL AUTO_INCREMENT,
+          `farm_id` int NOT NULL,
+          `name` varchar(200) NOT NULL,
+          `description` varchar(1000) NULL,
+          `area` double NULL,
+          `created_at` datetime NULL,
+          `updated_at` datetime NULL,
+          PRIMARY KEY (`id`),
+          CONSTRAINT `fk_farm_locations_farms_farm_id` FOREIGN KEY (`farm_id`) REFERENCES `farms` (`id`) ON DELETE CASCADE
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (110ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE `farm_staffs` (
+          `id` int NOT NULL AUTO_INCREMENT,
+          `farm_id` int NOT NULL,
+          `full_name` varchar(200) NOT NULL,
+          `role` varchar(100) NOT NULL,
+          `phone` varchar(20) NULL,
+          `email` varchar(200) NULL,
+          `created_at` datetime NULL,
+          `updated_at` datetime NULL,
+          PRIMARY KEY (`id`),
+          CONSTRAINT `fk_farm_staffs_farms_farm_id` FOREIGN KEY (`farm_id`) REFERENCES `farms` (`id`) ON DELETE CASCADE
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (98ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX `ix_clinic_availabilities_clinic_id` ON `clinic_availabilities` (`clinic_id`);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (80ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX `ix_clinic_schedules_clinic_id` ON `clinic_schedules` (`clinic_id`);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (118ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE UNIQUE INDEX `ix_clinics_user_id` ON `clinics` (`user_id`);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (33ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX `ix_farm_certifications_farm_id` ON `farm_certifications` (`farm_id`);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (31ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX `ix_farm_locations_farm_id` ON `farm_locations` (`farm_id`);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (32ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX `ix_farm_staffs_farm_id` ON `farm_staffs` (`farm_id`);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (30ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE UNIQUE INDEX `ix_farms_user_id` ON `farms` (`user_id`);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (29ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX `ix_notifications_user_id` ON `notifications` (`user_id`);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (26ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE UNIQUE INDEX `ix_professional_licenses_license_number` ON `professional_licenses` (`license_number`);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (34ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX `ix_service_area_locations_clinic_id` ON `service_area_locations` (`clinic_id`);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (31ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX `ix_specialties_clinic_id` ON `specialties` (`clinic_id`);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (26ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE UNIQUE INDEX `ix_user_preferences_user_id` ON `user_preferences` (`user_id`);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (25ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE UNIQUE INDEX `ix_user_profiles_user_id` ON `user_profiles` (`user_id`);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (25ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE UNIQUE INDEX `ix_users_email` ON `users` (`email`);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (24ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE UNIQUE INDEX `ix_users_username` ON `users` (`username`);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (6ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      INSERT INTO `__EFMigrationsHistory` (`MigrationId`, `ProductVersion`)
+      VALUES ('20260605181659_ProfileInitialCreate', '10.0.8');
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT RELEASE_LOCK('__EFMigrationsLock');
+warn: Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServer[8]
+      The ASP.NET Core developer certificate is not trusted. For information about trusting the ASP.NET Core developer certificate, see https://aka.ms/aspnet/https-trust-dev-cert
+info: Microsoft.Hosting.Lifetime[14]
+      Now listening on: https://localhost:5001
+info: Microsoft.Hosting.Lifetime[14]
+      Now listening on: http://localhost:5000
+info: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
+info: Microsoft.Hosting.Lifetime[0]
+      Hosting environment: Development
+info: Microsoft.Hosting.Lifetime[0]
+      Content root path: C:\Users\jayal\OneDrive\Escritorio\Projects\titan\anitec-backend\anitec-platform\Titan.AniTec.Platform

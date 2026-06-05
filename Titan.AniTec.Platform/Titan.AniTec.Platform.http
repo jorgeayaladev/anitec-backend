@@ -1,0 +1,6 @@
+@Titan.AniTec.Platform_HostAddress = http://localhost:5170
+
+GET {{Titan.AniTec.Platform_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
