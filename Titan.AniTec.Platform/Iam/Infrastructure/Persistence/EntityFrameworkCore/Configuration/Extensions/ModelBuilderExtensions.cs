@@ -7,6 +7,15 @@ public static class ModelBuilderExtensions
 {
     public static void ApplyIamConfiguration(this ModelBuilder builder)
     {
+        builder.Entity<Role>(entity =>
+        {
+            entity.HasKey(r => r.Id);
+            entity.Property(r => r.Id).IsRequired().ValueGeneratedOnAdd();
+            entity.Property(r => r.Name).IsRequired().HasMaxLength(50);
+            entity.HasIndex(r => r.Name).IsUnique();
+            entity.Property(r => r.Description).HasMaxLength(500);
+        });
+
         builder.Entity<User>(entity =>
         {
             entity.HasKey(u => u.Id);

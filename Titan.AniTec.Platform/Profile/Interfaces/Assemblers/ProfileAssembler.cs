@@ -111,6 +111,9 @@ public static class ProfileAssembler
 
     public static UpdateAvailabilityCommand ToCommand(int userId, UpdateAvailabilityResource resource)
         => new(userId, resource.Availabilities.Select(a => new AvailabilityItem(a.DayOfWeek, a.StartTime, a.EndTime, a.IsAvailable)).ToList());
+
+    public static UpdateServiceAreaCommand ToCommand(int userId, UpdateServiceAreaResource resource)
+        => new(userId, resource.Locations.Select(l => new ServiceAreaLocationItem(l.Name, l.Address, l.Latitude, l.Longitude)).ToList());
 }
 
 public static class ProfileActionResultAssembler

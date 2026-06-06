@@ -192,4 +192,25 @@ public class ProfileController(
         var result = await commandService.RemoveFarmCertificationAsync(command);
         return ProfileActionResultAssembler.ToActionResult(result);
     }
+
+    [HttpPut("me/avatar")]
+    public async Task<IActionResult> UploadAvatar(IFormFile file)
+    {
+        if (file == null || file.Length == 0)
+            return BadRequest("No file provided");
+
+        using var memoryStream = new MemoryStream();
+        await file.CopyToAsync(memoryStream);
+        var command = new UploadAvatarCommand(CurrentUserId, memoryStream.ToArray(), file.FileName);
+        var result = await commandService.UploadAvatarAsync(command);
+        return ProfileActionResultAssembler.ToActionResult(result.Map(ProfileAssembler.ToResource));
+    }
+
+    [HttpDelete("me/avatar")]
+    public async Task<IActionResult> DeleteAvatar()
+    {
+        var command = new DeleteAvatarCommand(CurrentUserId);
+        var result = await commandService.DeleteAvatarAsync(command);
+        return ProfileActionResultAssembler.ToActionResult(result);
+    }
 }

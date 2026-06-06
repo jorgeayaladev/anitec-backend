@@ -19,6 +19,677 @@ namespace Titan.AniTec.Platform.Migrations
                 .HasAnnotation("ProductVersion", "10.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+            modelBuilder.Entity("Titan.AniTec.Platform.Device.Domain.Model.Aggregates.DeviceAlert", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<string>("AlertType")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("alert_type");
+
+                    b.Property<DateTimeOffset?>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("varchar(1000)")
+                        .HasColumnName("description");
+
+                    b.Property<int>("DeviceId")
+                        .HasColumnType("int")
+                        .HasColumnName("device_id");
+
+                    b.Property<int>("FarmId")
+                        .HasColumnType("int")
+                        .HasColumnName("farm_id");
+
+                    b.Property<bool>("IsResolved")
+                        .HasColumnType("tinyint(1)")
+                        .HasColumnName("is_resolved");
+
+                    b.Property<DateTime?>("ResolvedAt")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("resolved_at");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id")
+                        .HasName("pk_device_alerts");
+
+                    b.HasIndex("FarmId")
+                        .HasDatabaseName("ix_device_alerts_farm_id");
+
+                    b.ToTable("device_alerts");
+                });
+
+            modelBuilder.Entity("Titan.AniTec.Platform.Device.Domain.Model.Aggregates.DeviceAssignment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<int>("AnimalId")
+                        .HasColumnType("int")
+                        .HasColumnName("animal_id");
+
+                    b.Property<DateTime>("AssignedAt")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("assigned_at");
+
+                    b.Property<DateTimeOffset?>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_at");
+
+                    b.Property<int>("DeviceId")
+                        .HasColumnType("int")
+                        .HasColumnName("device_id");
+
+                    b.Property<int>("FarmId")
+                        .HasColumnType("int")
+                        .HasColumnName("farm_id");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("tinyint(1)")
+                        .HasColumnName("is_active");
+
+                    b.Property<DateTime?>("UnassignedAt")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("unassigned_at");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id")
+                        .HasName("pk_device_assignments");
+
+                    b.HasIndex("AnimalId")
+                        .HasDatabaseName("ix_device_assignments_animal_id");
+
+                    b.HasIndex("DeviceId")
+                        .HasDatabaseName("ix_device_assignments_device_id");
+
+                    b.HasIndex("FarmId")
+                        .HasDatabaseName("ix_device_assignments_farm_id");
+
+                    b.ToTable("device_assignments");
+                });
+
+            modelBuilder.Entity("Titan.AniTec.Platform.Device.Domain.Model.Aggregates.DeviceType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("category");
+
+                    b.Property<DateTimeOffset?>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(2000)
+                        .HasColumnType("varchar(2000)")
+                        .HasColumnName("description");
+
+                    b.Property<string>("Metrics")
+                        .HasMaxLength(4000)
+                        .HasColumnType("varchar(4000)")
+                        .HasColumnName("metrics");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)")
+                        .HasColumnName("name");
+
+                    b.Property<string>("Specifications")
+                        .HasMaxLength(4000)
+                        .HasColumnType("varchar(4000)")
+                        .HasColumnName("specifications");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id")
+                        .HasName("pk_device_types");
+
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasDatabaseName("ix_device_types_name");
+
+                    b.ToTable("device_types");
+                });
+
+            modelBuilder.Entity("Titan.AniTec.Platform.Device.Domain.Model.Aggregates.FarmDevice", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<double?>("BatteryLevel")
+                        .HasColumnType("double")
+                        .HasColumnName("battery_level");
+
+                    b.Property<string>("Configuration")
+                        .HasMaxLength(4000)
+                        .HasColumnType("varchar(4000)")
+                        .HasColumnName("configuration");
+
+                    b.Property<DateTimeOffset?>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_at");
+
+                    b.Property<int?>("CurrentAnimalId")
+                        .HasColumnType("int")
+                        .HasColumnName("current_animal_id");
+
+                    b.Property<int?>("CurrentLocationId")
+                        .HasColumnType("int")
+                        .HasColumnName("current_location_id");
+
+                    b.Property<int>("DeviceTypeId")
+                        .HasColumnType("int")
+                        .HasColumnName("device_type_id");
+
+                    b.Property<int>("FarmId")
+                        .HasColumnType("int")
+                        .HasColumnName("farm_id");
+
+                    b.Property<string>("FirmwareVersion")
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("firmware_version");
+
+                    b.Property<DateTime?>("LastPingAt")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("last_ping_at");
+
+                    b.Property<DateTime?>("LastReadingAt")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("last_reading_at");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)")
+                        .HasColumnName("name");
+
+                    b.Property<string>("SerialNumber")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)")
+                        .HasColumnName("serial_number");
+
+                    b.Property<double?>("SignalStrength")
+                        .HasColumnType("double")
+                        .HasColumnName("signal_strength");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("status");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id")
+                        .HasName("pk_farm_devices");
+
+                    b.HasIndex("FarmId")
+                        .HasDatabaseName("ix_farm_devices_farm_id");
+
+                    b.HasIndex("SerialNumber")
+                        .HasDatabaseName("ix_farm_devices_serial_number");
+
+                    b.HasIndex("Status")
+                        .HasDatabaseName("ix_farm_devices_status");
+
+                    b.ToTable("farm_devices");
+                });
+
+            modelBuilder.Entity("Titan.AniTec.Platform.Financial.Domain.Model.Aggregates.Budget", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<string>("BudgetType")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("budget_type");
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("category");
+
+                    b.Property<DateTimeOffset?>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_at");
+
+                    b.Property<int>("FarmId")
+                        .HasColumnType("int")
+                        .HasColumnName("farm_id");
+
+                    b.Property<int>("Month")
+                        .HasColumnType("int")
+                        .HasColumnName("month");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(2000)
+                        .HasColumnType("varchar(2000)")
+                        .HasColumnName("notes");
+
+                    b.Property<decimal>("PlannedAmount")
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("planned_amount");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("updated_at");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int")
+                        .HasColumnName("year");
+
+                    b.HasKey("Id")
+                        .HasName("pk_budgets");
+
+                    b.HasIndex("FarmId")
+                        .HasDatabaseName("ix_budgets_farm_id");
+
+                    b.HasIndex("FarmId", "Year", "Month", "Category", "BudgetType")
+                        .IsUnique()
+                        .HasDatabaseName("ix_budgets_farm_id_year_month_category_budget_type");
+
+                    b.ToTable("budgets");
+                });
+
+            modelBuilder.Entity("Titan.AniTec.Platform.Financial.Domain.Model.Aggregates.Transaction", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("amount");
+
+                    b.Property<int?>("AnimalId")
+                        .HasColumnType("int")
+                        .HasColumnName("animal_id");
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("category");
+
+                    b.Property<DateTimeOffset?>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)")
+                        .HasColumnName("description");
+
+                    b.Property<int>("FarmId")
+                        .HasColumnType("int")
+                        .HasColumnName("farm_id");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(2000)
+                        .HasColumnType("varchar(2000)")
+                        .HasColumnName("notes");
+
+                    b.Property<string>("PaymentMethod")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("payment_method");
+
+                    b.Property<string>("Reference")
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)")
+                        .HasColumnName("reference");
+
+                    b.Property<DateTime>("TransactionDate")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("transaction_date");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("type");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id")
+                        .HasName("pk_transactions");
+
+                    b.HasIndex("FarmId")
+                        .HasDatabaseName("ix_transactions_farm_id");
+
+                    b.HasIndex("FarmId", "Category")
+                        .HasDatabaseName("ix_transactions_farm_id_category");
+
+                    b.HasIndex("FarmId", "Type")
+                        .HasDatabaseName("ix_transactions_farm_id_type");
+
+                    b.ToTable("transactions");
+                });
+
+            modelBuilder.Entity("Titan.AniTec.Platform.Health.Domain.Model.Aggregates.HealthAlert", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<string>("AlertType")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("alert_type");
+
+                    b.Property<int>("AnimalId")
+                        .HasColumnType("int")
+                        .HasColumnName("animal_id");
+
+                    b.Property<DateTimeOffset?>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)")
+                        .HasColumnName("description");
+
+                    b.Property<int>("FarmId")
+                        .HasColumnType("int")
+                        .HasColumnName("farm_id");
+
+                    b.Property<bool>("IsResolved")
+                        .HasColumnType("tinyint(1)")
+                        .HasColumnName("is_resolved");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(2000)
+                        .HasColumnType("varchar(2000)")
+                        .HasColumnName("notes");
+
+                    b.Property<DateTime?>("ResolvedAt")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("resolved_at");
+
+                    b.Property<string>("ResolvedBy")
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)")
+                        .HasColumnName("resolved_by");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id")
+                        .HasName("pk_health_alerts");
+
+                    b.HasIndex("AnimalId")
+                        .HasDatabaseName("ix_health_alerts_animal_id");
+
+                    b.HasIndex("FarmId")
+                        .HasDatabaseName("ix_health_alerts_farm_id");
+
+                    b.ToTable("health_alerts");
+                });
+
+            modelBuilder.Entity("Titan.AniTec.Platform.Health.Domain.Model.Aggregates.Treatment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<string>("AdministrationRoute")
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("administration_route");
+
+                    b.Property<int>("AnimalId")
+                        .HasColumnType("int")
+                        .HasColumnName("animal_id");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("Diagnosis")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)")
+                        .HasColumnName("diagnosis");
+
+                    b.Property<string>("Dosage")
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("dosage");
+
+                    b.Property<int?>("DurationDays")
+                        .HasColumnType("int")
+                        .HasColumnName("duration_days");
+
+                    b.Property<int>("FarmId")
+                        .HasColumnType("int")
+                        .HasColumnName("farm_id");
+
+                    b.Property<string>("MedicationName")
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)")
+                        .HasColumnName("medication_name");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(2000)
+                        .HasColumnType("varchar(2000)")
+                        .HasColumnName("notes");
+
+                    b.Property<string>("TreatedBy")
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)")
+                        .HasColumnName("treated_by");
+
+                    b.Property<DateTime>("TreatmentDate")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("treatment_date");
+
+                    b.Property<int?>("WithdrawalPeriodDays")
+                        .HasColumnType("int")
+                        .HasColumnName("withdrawal_period_days");
+
+                    b.HasKey("Id")
+                        .HasName("pk_treatments");
+
+                    b.HasIndex("AnimalId")
+                        .HasDatabaseName("ix_treatments_animal_id");
+
+                    b.HasIndex("FarmId")
+                        .HasDatabaseName("ix_treatments_farm_id");
+
+                    b.ToTable("treatments");
+                });
+
+            modelBuilder.Entity("Titan.AniTec.Platform.Health.Domain.Model.Aggregates.Vaccination", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<int>("AnimalId")
+                        .HasColumnType("int")
+                        .HasColumnName("animal_id");
+
+                    b.Property<DateTime>("ApplicationDate")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("application_date");
+
+                    b.Property<string>("ApplicationRoute")
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("application_route");
+
+                    b.Property<string>("AppliedBy")
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)")
+                        .HasColumnName("applied_by");
+
+                    b.Property<string>("BatchNumber")
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("batch_number");
+
+                    b.Property<DateTimeOffset?>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("Dosage")
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("dosage");
+
+                    b.Property<int>("FarmId")
+                        .HasColumnType("int")
+                        .HasColumnName("farm_id");
+
+                    b.Property<DateTime?>("NextDoseDate")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("next_dose_date");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(2000)
+                        .HasColumnType("varchar(2000)")
+                        .HasColumnName("notes");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("updated_at");
+
+                    b.Property<string>("VaccineName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)")
+                        .HasColumnName("vaccine_name");
+
+                    b.HasKey("Id")
+                        .HasName("pk_vaccinations");
+
+                    b.HasIndex("AnimalId")
+                        .HasDatabaseName("ix_vaccinations_animal_id");
+
+                    b.HasIndex("FarmId")
+                        .HasDatabaseName("ix_vaccinations_farm_id");
+
+                    b.ToTable("vaccinations");
+                });
+
+            modelBuilder.Entity("Titan.AniTec.Platform.Health.Domain.Model.Aggregates.VeterinaryVisit", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<int>("AnimalId")
+                        .HasColumnType("int")
+                        .HasColumnName("animal_id");
+
+                    b.Property<decimal?>("Cost")
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("cost");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("Diagnosis")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)")
+                        .HasColumnName("diagnosis");
+
+                    b.Property<int>("FarmId")
+                        .HasColumnType("int")
+                        .HasColumnName("farm_id");
+
+                    b.Property<DateTime?>("FollowUpDate")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("follow_up_date");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(2000)
+                        .HasColumnType("varchar(2000)")
+                        .HasColumnName("notes");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)")
+                        .HasColumnName("reason");
+
+                    b.Property<string>("Recommendations")
+                        .HasMaxLength(2000)
+                        .HasColumnType("varchar(2000)")
+                        .HasColumnName("recommendations");
+
+                    b.Property<string>("VetName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)")
+                        .HasColumnName("vet_name");
+
+                    b.Property<DateTime>("VisitDate")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("visit_date");
+
+                    b.HasKey("Id")
+                        .HasName("pk_veterinary_visits");
+
+                    b.HasIndex("AnimalId")
+                        .HasDatabaseName("ix_veterinary_visits_animal_id");
+
+                    b.HasIndex("FarmId")
+                        .HasDatabaseName("ix_veterinary_visits_farm_id");
+
+                    b.ToTable("veterinary_visits");
+                });
+
             modelBuilder.Entity("Titan.AniTec.Platform.Iam.Domain.Model.Aggregates.User", b =>
                 {
                     b.Property<int>("Id")
@@ -85,6 +756,536 @@ namespace Titan.AniTec.Platform.Migrations
                         .HasDatabaseName("ix_users_username");
 
                     b.ToTable("users");
+                });
+
+            modelBuilder.Entity("Titan.AniTec.Platform.Inventory.Domain.Model.Aggregates.InventoryItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<DateTimeOffset?>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_at");
+
+                    b.Property<double>("CurrentStock")
+                        .HasColumnType("double")
+                        .HasColumnName("current_stock");
+
+                    b.Property<int>("FarmId")
+                        .HasColumnType("int")
+                        .HasColumnName("farm_id");
+
+                    b.Property<string>("Location")
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)")
+                        .HasColumnName("location");
+
+                    b.Property<double>("MinimumStock")
+                        .HasColumnType("double")
+                        .HasColumnName("minimum_stock");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int")
+                        .HasColumnName("product_id");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id")
+                        .HasName("pk_inventory_items");
+
+                    b.HasIndex("FarmId")
+                        .HasDatabaseName("ix_inventory_items_farm_id");
+
+                    b.HasIndex("ProductId")
+                        .IsUnique()
+                        .HasDatabaseName("ix_inventory_items_product_id");
+
+                    b.ToTable("inventory_items");
+                });
+
+            modelBuilder.Entity("Titan.AniTec.Platform.Inventory.Domain.Model.Aggregates.Product", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("category");
+
+                    b.Property<DateTimeOffset?>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(2000)
+                        .HasColumnType("varchar(2000)")
+                        .HasColumnName("description");
+
+                    b.Property<int>("FarmId")
+                        .HasColumnType("int")
+                        .HasColumnName("farm_id");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)")
+                        .HasColumnName("name");
+
+                    b.Property<string>("Sku")
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("sku");
+
+                    b.Property<string>("Unit")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("unit");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id")
+                        .HasName("pk_products");
+
+                    b.HasIndex("FarmId")
+                        .HasDatabaseName("ix_products_farm_id");
+
+                    b.ToTable("products");
+                });
+
+            modelBuilder.Entity("Titan.AniTec.Platform.Inventory.Domain.Model.Aggregates.StockMovement", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_at");
+
+                    b.Property<int>("FarmId")
+                        .HasColumnType("int")
+                        .HasColumnName("farm_id");
+
+                    b.Property<int>("InventoryItemId")
+                        .HasColumnType("int")
+                        .HasColumnName("inventory_item_id");
+
+                    b.Property<string>("MovementType")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("movement_type");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(2000)
+                        .HasColumnType("varchar(2000)")
+                        .HasColumnName("notes");
+
+                    b.Property<double>("Quantity")
+                        .HasColumnType("double")
+                        .HasColumnName("quantity");
+
+                    b.Property<string>("Reference")
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)")
+                        .HasColumnName("reference");
+
+                    b.Property<decimal?>("UnitPrice")
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("unit_price");
+
+                    b.HasKey("Id")
+                        .HasName("pk_stock_movements");
+
+                    b.HasIndex("FarmId")
+                        .HasDatabaseName("ix_stock_movements_farm_id");
+
+                    b.HasIndex("InventoryItemId")
+                        .HasDatabaseName("ix_stock_movements_inventory_item_id");
+
+                    b.ToTable("stock_movements");
+                });
+
+            modelBuilder.Entity("Titan.AniTec.Platform.Inventory.Domain.Model.Aggregates.Supplier", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Address")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)")
+                        .HasColumnName("address");
+
+                    b.Property<string>("ContactPerson")
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)")
+                        .HasColumnName("contact_person");
+
+                    b.Property<DateTimeOffset?>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)")
+                        .HasColumnName("email");
+
+                    b.Property<int>("FarmId")
+                        .HasColumnType("int")
+                        .HasColumnName("farm_id");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)")
+                        .HasColumnName("name");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(2000)
+                        .HasColumnType("varchar(2000)")
+                        .HasColumnName("notes");
+
+                    b.Property<string>("Phone")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("phone");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id")
+                        .HasName("pk_suppliers");
+
+                    b.HasIndex("FarmId")
+                        .HasDatabaseName("ix_suppliers_farm_id");
+
+                    b.ToTable("suppliers");
+                });
+
+            modelBuilder.Entity("Titan.AniTec.Platform.Livestock.Domain.Model.Aggregates.Animal", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<int?>("BreedId")
+                        .HasColumnType("int")
+                        .HasColumnName("breed_id");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("code");
+
+                    b.Property<string>("Color")
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("color");
+
+                    b.Property<DateTimeOffset?>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("date_of_birth");
+
+                    b.Property<int>("FarmId")
+                        .HasColumnType("int")
+                        .HasColumnName("farm_id");
+
+                    b.Property<int?>("FatherId")
+                        .HasColumnType("int")
+                        .HasColumnName("father_id");
+
+                    b.Property<int?>("MotherId")
+                        .HasColumnType("int")
+                        .HasColumnName("mother_id");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)")
+                        .HasColumnName("name");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(2000)
+                        .HasColumnType("varchar(2000)")
+                        .HasColumnName("notes");
+
+                    b.Property<DateTime?>("PurchaseDate")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("purchase_date");
+
+                    b.Property<decimal?>("PurchasePrice")
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("purchase_price");
+
+                    b.Property<string>("Sex")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("sex");
+
+                    b.Property<string>("Species")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("species");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("status");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("updated_at");
+
+                    b.Property<double?>("Weight")
+                        .HasColumnType("double")
+                        .HasColumnName("weight");
+
+                    b.HasKey("Id")
+                        .HasName("pk_animals");
+
+                    b.HasIndex("BreedId")
+                        .HasDatabaseName("ix_animals_breed_id");
+
+                    b.HasIndex("Code")
+                        .HasDatabaseName("ix_animals_code");
+
+                    b.HasIndex("FarmId")
+                        .HasDatabaseName("ix_animals_farm_id");
+
+                    b.HasIndex("FatherId")
+                        .HasDatabaseName("ix_animals_father_id");
+
+                    b.HasIndex("MotherId")
+                        .HasDatabaseName("ix_animals_mother_id");
+
+                    b.ToTable("animals");
+                });
+
+            modelBuilder.Entity("Titan.AniTec.Platform.Livestock.Domain.Model.Aggregates.Birth", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<DateTime>("BirthDate")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("birth_date");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_at");
+
+                    b.Property<int>("FarmId")
+                        .HasColumnType("int")
+                        .HasColumnName("farm_id");
+
+                    b.Property<int?>("FatherId")
+                        .HasColumnType("int")
+                        .HasColumnName("father_id");
+
+                    b.Property<int>("MotherId")
+                        .HasColumnType("int")
+                        .HasColumnName("mother_id");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(2000)
+                        .HasColumnType("varchar(2000)")
+                        .HasColumnName("notes");
+
+                    b.Property<int>("OffspringCount")
+                        .HasColumnType("int")
+                        .HasColumnName("offspring_count");
+
+                    b.HasKey("Id")
+                        .HasName("pk_births");
+
+                    b.HasIndex("FarmId")
+                        .HasDatabaseName("ix_births_farm_id");
+
+                    b.HasIndex("FatherId")
+                        .HasDatabaseName("ix_births_father_id");
+
+                    b.HasIndex("MotherId")
+                        .HasDatabaseName("ix_births_mother_id");
+
+                    b.ToTable("births");
+                });
+
+            modelBuilder.Entity("Titan.AniTec.Platform.Livestock.Domain.Model.Aggregates.Breed", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<DateTimeOffset?>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(2000)
+                        .HasColumnType("varchar(2000)")
+                        .HasColumnName("description");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)")
+                        .HasColumnName("name");
+
+                    b.Property<string>("Species")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("species");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id")
+                        .HasName("pk_breeds");
+
+                    b.HasIndex("Name", "Species")
+                        .IsUnique()
+                        .HasDatabaseName("ix_breeds_name_species");
+
+                    b.ToTable("breeds");
+                });
+
+            modelBuilder.Entity("Titan.AniTec.Platform.Livestock.Domain.Model.Aggregates.Mating", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<DateTime?>("ConfirmedAt")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("confirmed_at");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_at");
+
+                    b.Property<int>("FarmId")
+                        .HasColumnType("int")
+                        .HasColumnName("farm_id");
+
+                    b.Property<int>("FemaleId")
+                        .HasColumnType("int")
+                        .HasColumnName("female_id");
+
+                    b.Property<int>("MaleId")
+                        .HasColumnType("int")
+                        .HasColumnName("male_id");
+
+                    b.Property<DateTime>("MatingDate")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("mating_date");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(2000)
+                        .HasColumnType("varchar(2000)")
+                        .HasColumnName("notes");
+
+                    b.Property<string>("Result")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("result");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id")
+                        .HasName("pk_matings");
+
+                    b.HasIndex("FarmId")
+                        .HasDatabaseName("ix_matings_farm_id");
+
+                    b.HasIndex("FemaleId")
+                        .HasDatabaseName("ix_matings_female_id");
+
+                    b.HasIndex("MaleId")
+                        .HasDatabaseName("ix_matings_male_id");
+
+                    b.ToTable("matings");
+                });
+
+            modelBuilder.Entity("Titan.AniTec.Platform.Livestock.Domain.Model.Aggregates.Weaning", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<int>("CalfId")
+                        .HasColumnType("int")
+                        .HasColumnName("calf_id");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_at");
+
+                    b.Property<int>("FarmId")
+                        .HasColumnType("int")
+                        .HasColumnName("farm_id");
+
+                    b.Property<int>("MotherId")
+                        .HasColumnType("int")
+                        .HasColumnName("mother_id");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(2000)
+                        .HasColumnType("varchar(2000)")
+                        .HasColumnName("notes");
+
+                    b.Property<DateTime>("WeaningDate")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("weaning_date");
+
+                    b.Property<double?>("Weight")
+                        .HasColumnType("double")
+                        .HasColumnName("weight");
+
+                    b.HasKey("Id")
+                        .HasName("pk_weanings");
+
+                    b.HasIndex("CalfId")
+                        .HasDatabaseName("ix_weanings_calf_id");
+
+                    b.HasIndex("FarmId")
+                        .HasDatabaseName("ix_weanings_farm_id");
+
+                    b.HasIndex("MotherId")
+                        .HasDatabaseName("ix_weanings_mother_id");
+
+                    b.ToTable("weanings");
                 });
 
             modelBuilder.Entity("Titan.AniTec.Platform.Profile.Domain.Model.Aggregates.Clinic", b =>
@@ -753,6 +1954,611 @@ namespace Titan.AniTec.Platform.Migrations
                         .HasDatabaseName("ix_user_profiles_user_id");
 
                     b.ToTable("user_profiles");
+                });
+
+            modelBuilder.Entity("Titan.AniTec.Platform.Subscription.Domain.Model.Aggregates.Invoice", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("amount");
+
+                    b.Property<DateTimeOffset?>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("Currency")
+                        .IsRequired()
+                        .HasMaxLength(3)
+                        .HasColumnType("varchar(3)")
+                        .HasColumnName("currency");
+
+                    b.Property<DateTime>("DueDate")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("due_date");
+
+                    b.Property<int>("FarmId")
+                        .HasColumnType("int")
+                        .HasColumnName("farm_id");
+
+                    b.Property<DateTime?>("PaidAt")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("paid_at");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("status");
+
+                    b.Property<string>("StripeInvoiceId")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)")
+                        .HasColumnName("stripe_invoice_id");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("updated_at");
+
+                    b.Property<int>("UserSubscriptionId")
+                        .HasColumnType("int")
+                        .HasColumnName("user_subscription_id");
+
+                    b.HasKey("Id")
+                        .HasName("pk_invoices");
+
+                    b.HasIndex("FarmId")
+                        .HasDatabaseName("ix_invoices_farm_id");
+
+                    b.ToTable("invoices");
+                });
+
+            modelBuilder.Entity("Titan.AniTec.Platform.Subscription.Domain.Model.Aggregates.Payment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("amount");
+
+                    b.Property<DateTimeOffset?>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("Currency")
+                        .IsRequired()
+                        .HasMaxLength(3)
+                        .HasColumnType("varchar(3)")
+                        .HasColumnName("currency");
+
+                    b.Property<int>("FarmId")
+                        .HasColumnType("int")
+                        .HasColumnName("farm_id");
+
+                    b.Property<int>("InvoiceId")
+                        .HasColumnType("int")
+                        .HasColumnName("invoice_id");
+
+                    b.Property<int?>("PaymentMethodId")
+                        .HasColumnType("int")
+                        .HasColumnName("payment_method_id");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("status");
+
+                    b.Property<string>("StripePaymentIntentId")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)")
+                        .HasColumnName("stripe_payment_intent_id");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id")
+                        .HasName("pk_payments");
+
+                    b.HasIndex("FarmId")
+                        .HasDatabaseName("ix_payments_farm_id");
+
+                    b.ToTable("payments");
+                });
+
+            modelBuilder.Entity("Titan.AniTec.Platform.Subscription.Domain.Model.Aggregates.PaymentMethod", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<string>("CardBrand")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("card_brand");
+
+                    b.Property<DateTimeOffset?>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_at");
+
+                    b.Property<int>("ExpMonth")
+                        .HasColumnType("int")
+                        .HasColumnName("exp_month");
+
+                    b.Property<int>("ExpYear")
+                        .HasColumnType("int")
+                        .HasColumnName("exp_year");
+
+                    b.Property<int>("FarmId")
+                        .HasColumnType("int")
+                        .HasColumnName("farm_id");
+
+                    b.Property<bool>("IsDefault")
+                        .HasColumnType("tinyint(1)")
+                        .HasColumnName("is_default");
+
+                    b.Property<string>("Last4")
+                        .IsRequired()
+                        .HasMaxLength(4)
+                        .HasColumnType("varchar(4)")
+                        .HasColumnName("last4");
+
+                    b.Property<string>("StripePaymentMethodId")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)")
+                        .HasColumnName("stripe_payment_method_id");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id")
+                        .HasName("pk_payment_methods");
+
+                    b.HasIndex("FarmId")
+                        .HasDatabaseName("ix_payment_methods_farm_id");
+
+                    b.ToTable("payment_methods");
+                });
+
+            modelBuilder.Entity("Titan.AniTec.Platform.Subscription.Domain.Model.Aggregates.SubscriptionPlan", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<string>("BillingCycle")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("billing_cycle");
+
+                    b.Property<DateTimeOffset?>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("Currency")
+                        .IsRequired()
+                        .HasMaxLength(3)
+                        .HasColumnType("varchar(3)")
+                        .HasColumnName("currency");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(2000)
+                        .HasColumnType("varchar(2000)")
+                        .HasColumnName("description");
+
+                    b.Property<string>("Features")
+                        .HasMaxLength(4000)
+                        .HasColumnType("varchar(4000)")
+                        .HasColumnName("features");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("tinyint(1)")
+                        .HasColumnName("is_active");
+
+                    b.Property<int>("MaxAnimals")
+                        .HasColumnType("int")
+                        .HasColumnName("max_animals");
+
+                    b.Property<int>("MaxFarms")
+                        .HasColumnType("int")
+                        .HasColumnName("max_farms");
+
+                    b.Property<int>("MaxUsers")
+                        .HasColumnType("int")
+                        .HasColumnName("max_users");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)")
+                        .HasColumnName("name");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("price");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id")
+                        .HasName("pk_subscription_plans");
+
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasDatabaseName("ix_subscription_plans_name");
+
+                    b.ToTable("subscription_plans");
+                });
+
+            modelBuilder.Entity("Titan.AniTec.Platform.Subscription.Domain.Model.Aggregates.UserSubscription", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<bool>("AutoRenew")
+                        .HasColumnType("tinyint(1)")
+                        .HasColumnName("auto_renew");
+
+                    b.Property<DateTime?>("CanceledAt")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("canceled_at");
+
+                    b.Property<DateTimeOffset?>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("end_date");
+
+                    b.Property<int>("FarmId")
+                        .HasColumnType("int")
+                        .HasColumnName("farm_id");
+
+                    b.Property<int>("PlanId")
+                        .HasColumnType("int")
+                        .HasColumnName("plan_id");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("start_date");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("status");
+
+                    b.Property<string>("StripeSubscriptionId")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)")
+                        .HasColumnName("stripe_subscription_id");
+
+                    b.Property<DateTime?>("TrialEndDate")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("trial_end_date");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id")
+                        .HasName("pk_user_subscriptions");
+
+                    b.HasIndex("FarmId")
+                        .HasDatabaseName("ix_user_subscriptions_farm_id");
+
+                    b.HasIndex("Status")
+                        .HasDatabaseName("ix_user_subscriptions_status");
+
+                    b.ToTable("user_subscriptions");
+                });
+
+            modelBuilder.Entity("Titan.AniTec.Platform.Telemetry.Domain.Model.Aggregates.TelemetryAlert", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<DateTime?>("AcknowledgedAt")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("acknowledged_at");
+
+                    b.Property<int?>("AcknowledgedBy")
+                        .HasColumnType("int")
+                        .HasColumnName("acknowledged_by");
+
+                    b.Property<decimal?>("ActualValue")
+                        .HasColumnType("decimal(18,4)")
+                        .HasColumnName("actual_value");
+
+                    b.Property<string>("AlertType")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("alert_type");
+
+                    b.Property<int?>("AnimalId")
+                        .HasColumnType("int")
+                        .HasColumnName("animal_id");
+
+                    b.Property<DateTimeOffset?>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_at");
+
+                    b.Property<int>("DeviceId")
+                        .HasColumnType("int")
+                        .HasColumnName("device_id");
+
+                    b.Property<int>("FarmId")
+                        .HasColumnType("int")
+                        .HasColumnName("farm_id");
+
+                    b.Property<bool>("IsAcknowledged")
+                        .HasColumnType("tinyint(1)")
+                        .HasColumnName("is_acknowledged");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("varchar(2000)")
+                        .HasColumnName("message");
+
+                    b.Property<string>("MetricType")
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("metric_type");
+
+                    b.Property<string>("Severity")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("severity");
+
+                    b.Property<decimal?>("ThresholdValue")
+                        .HasColumnType("decimal(18,4)")
+                        .HasColumnName("threshold_value");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id")
+                        .HasName("pk_telemetry_alerts");
+
+                    b.HasIndex("AnimalId")
+                        .HasDatabaseName("ix_telemetry_alerts_animal_id");
+
+                    b.HasIndex("DeviceId")
+                        .HasDatabaseName("ix_telemetry_alerts_device_id");
+
+                    b.HasIndex("FarmId")
+                        .HasDatabaseName("ix_telemetry_alerts_farm_id");
+
+                    b.ToTable("telemetry_alerts");
+                });
+
+            modelBuilder.Entity("Titan.AniTec.Platform.Telemetry.Domain.Model.Aggregates.TelemetryReading", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<int?>("AnimalId")
+                        .HasColumnType("int")
+                        .HasColumnName("animal_id");
+
+                    b.Property<DateTimeOffset?>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_at");
+
+                    b.Property<int?>("DeviceId")
+                        .HasColumnType("int")
+                        .HasColumnName("device_id");
+
+                    b.Property<int>("FarmId")
+                        .HasColumnType("int")
+                        .HasColumnName("farm_id");
+
+                    b.Property<string>("Metadata")
+                        .HasMaxLength(4000)
+                        .HasColumnType("varchar(4000)")
+                        .HasColumnName("metadata");
+
+                    b.Property<string>("MetricType")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("metric_type");
+
+                    b.Property<decimal?>("NumericValue")
+                        .HasColumnType("decimal(18,4)")
+                        .HasColumnName("numeric_value");
+
+                    b.Property<DateTime>("RecordedAt")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("recorded_at");
+
+                    b.Property<string>("StringValue")
+                        .HasMaxLength(2000)
+                        .HasColumnType("varchar(2000)")
+                        .HasColumnName("string_value");
+
+                    b.Property<string>("Unit")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("unit");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id")
+                        .HasName("pk_telemetry_readings");
+
+                    b.HasIndex("AnimalId")
+                        .HasDatabaseName("ix_telemetry_readings_animal_id");
+
+                    b.HasIndex("DeviceId")
+                        .HasDatabaseName("ix_telemetry_readings_device_id");
+
+                    b.HasIndex("FarmId")
+                        .HasDatabaseName("ix_telemetry_readings_farm_id");
+
+                    b.HasIndex("MetricType")
+                        .HasDatabaseName("ix_telemetry_readings_metric_type");
+
+                    b.HasIndex("RecordedAt")
+                        .HasDatabaseName("ix_telemetry_readings_recorded_at");
+
+                    b.ToTable("telemetry_readings");
+                });
+
+            modelBuilder.Entity("Titan.AniTec.Platform.Telemetry.Domain.Model.Aggregates.TelemetryThreshold", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<DateTimeOffset?>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_at");
+
+                    b.Property<int>("DeviceId")
+                        .HasColumnType("int")
+                        .HasColumnName("device_id");
+
+                    b.Property<int>("FarmId")
+                        .HasColumnType("int")
+                        .HasColumnName("farm_id");
+
+                    b.Property<bool>("IsEnabled")
+                        .HasColumnType("tinyint(1)")
+                        .HasColumnName("is_enabled");
+
+                    b.Property<decimal?>("MaxValue")
+                        .HasColumnType("decimal(18,4)")
+                        .HasColumnName("max_value");
+
+                    b.Property<string>("MetricType")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("metric_type");
+
+                    b.Property<decimal?>("MinValue")
+                        .HasColumnType("decimal(18,4)")
+                        .HasColumnName("min_value");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id")
+                        .HasName("pk_telemetry_thresholds");
+
+                    b.HasIndex("DeviceId")
+                        .HasDatabaseName("ix_telemetry_thresholds_device_id");
+
+                    b.HasIndex("FarmId")
+                        .HasDatabaseName("ix_telemetry_thresholds_farm_id");
+
+                    b.HasIndex("DeviceId", "MetricType")
+                        .IsUnique()
+                        .HasDatabaseName("ix_telemetry_thresholds_device_id_metric_type");
+
+                    b.ToTable("telemetry_thresholds");
+                });
+
+            modelBuilder.Entity("Titan.AniTec.Platform.Livestock.Domain.Model.Aggregates.Animal", b =>
+                {
+                    b.HasOne("Titan.AniTec.Platform.Livestock.Domain.Model.Aggregates.Breed", null)
+                        .WithMany()
+                        .HasForeignKey("BreedId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .HasConstraintName("fk_animals_breed_breed_id");
+
+                    b.HasOne("Titan.AniTec.Platform.Livestock.Domain.Model.Aggregates.Animal", null)
+                        .WithMany()
+                        .HasForeignKey("FatherId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .HasConstraintName("fk_animals_animals_father_id");
+
+                    b.HasOne("Titan.AniTec.Platform.Livestock.Domain.Model.Aggregates.Animal", null)
+                        .WithMany()
+                        .HasForeignKey("MotherId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .HasConstraintName("fk_animals_animals_mother_id");
+                });
+
+            modelBuilder.Entity("Titan.AniTec.Platform.Livestock.Domain.Model.Aggregates.Birth", b =>
+                {
+                    b.HasOne("Titan.AniTec.Platform.Livestock.Domain.Model.Aggregates.Animal", null)
+                        .WithMany()
+                        .HasForeignKey("FatherId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .HasConstraintName("fk_births_animals_father_id");
+
+                    b.HasOne("Titan.AniTec.Platform.Livestock.Domain.Model.Aggregates.Animal", null)
+                        .WithMany()
+                        .HasForeignKey("MotherId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_births_animals_mother_id");
+                });
+
+            modelBuilder.Entity("Titan.AniTec.Platform.Livestock.Domain.Model.Aggregates.Mating", b =>
+                {
+                    b.HasOne("Titan.AniTec.Platform.Livestock.Domain.Model.Aggregates.Animal", null)
+                        .WithMany()
+                        .HasForeignKey("FemaleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_matings_animals_female_id");
+
+                    b.HasOne("Titan.AniTec.Platform.Livestock.Domain.Model.Aggregates.Animal", null)
+                        .WithMany()
+                        .HasForeignKey("MaleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_matings_animals_male_id");
+                });
+
+            modelBuilder.Entity("Titan.AniTec.Platform.Livestock.Domain.Model.Aggregates.Weaning", b =>
+                {
+                    b.HasOne("Titan.AniTec.Platform.Livestock.Domain.Model.Aggregates.Animal", null)
+                        .WithMany()
+                        .HasForeignKey("CalfId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_weanings_animals_calf_id");
+
+                    b.HasOne("Titan.AniTec.Platform.Livestock.Domain.Model.Aggregates.Animal", null)
+                        .WithMany()
+                        .HasForeignKey("MotherId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_weanings_animals_mother_id");
                 });
 
             modelBuilder.Entity("Titan.AniTec.Platform.Profile.Domain.Model.Aggregates.ClinicAvailability", b =>

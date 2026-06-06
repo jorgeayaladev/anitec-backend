@@ -1,0 +1,100 @@
+using Titan.AniTec.Platform.Health.Domain.Model.Aggregates;
+using Titan.AniTec.Platform.Health.Domain.Repositories;
+using Titan.AniTec.Platform.Shared.Application.Model;
+
+namespace Titan.AniTec.Platform.Health.Application.CommandServices;
+
+public interface IHealthCommandService
+{
+    Task<Result<Vaccine>> RegisterVaccineAsync(RegisterVaccineCommand command);
+    Task<Result<Vaccine>> UpdateVaccineAsync(UpdateVaccineCommand command);
+    Task<Result> DeleteVaccineAsync(DeleteVaccineCommand command);
+    Task<Result<Medication>> RegisterMedicationAsync(RegisterMedicationCommand command);
+    Task<Result<Medication>> UpdateMedicationAsync(UpdateMedicationCommand command);
+    Task<Result> DeleteMedicationAsync(DeleteMedicationCommand command);
+    Task<Result<Disease>> RegisterDiseaseAsync(RegisterDiseaseCommand command);
+    Task<Result<Disease>> UpdateDiseaseAsync(UpdateDiseaseCommand command);
+    Task<Result> DeleteDiseaseAsync(DeleteDiseaseCommand command);
+    Task<Result<Diagnosis>> RegisterDiagnosisAsync(RegisterDiagnosisCommand command);
+    Task<Result<HealthEvent>> RegisterHealthEventAsync(RegisterHealthEventCommand command);
+    Task<Result<HealthEvent>> UpdateHealthEventAsync(UpdateHealthEventCommand command);
+    Task<Result> DeleteHealthEventAsync(DeleteHealthEventCommand command);
+    Task<Result<HealthEvent>> CompleteHealthEventAsync(CompleteHealthEventCommand command);
+    Task<Result<HealthEvent>> PostponeHealthEventAsync(PostponeHealthEventCommand command);
+    Task<Result> RegisterHealthEventBatchAsync(RegisterHealthEventBatchCommand command);
+    Task<Result<TreatmentDose>> RegisterTreatmentDoseAsync(RegisterTreatmentDoseCommand command);
+    Task<Result<Diagnosis>> UpdateDiagnosisAsync(UpdateDiagnosisCommand command);
+    Task<Result> DeleteDiagnosisAsync(DeleteDiagnosisCommand command);
+    Task<Result<Vaccination>> RegisterVaccinationAsync(RegisterVaccinationCommand command);
+    Task<Result<Vaccination>> UpdateVaccinationAsync(UpdateVaccinationCommand command);
+    Task<Result> DeleteVaccinationAsync(DeleteVaccinationCommand command);
+    Task<Result<Treatment>> RegisterTreatmentAsync(RegisterTreatmentCommand command);
+    Task<Result<Treatment>> UpdateTreatmentAsync(UpdateTreatmentCommand command);
+    Task<Result> DeleteTreatmentAsync(DeleteTreatmentCommand command);
+    Task<Result<Treatment>> StartTreatmentAsync(StartTreatmentCommand command);
+    Task<Result<Treatment>> CompleteTreatmentAsync(CompleteTreatmentCommand command);
+    Task<Result<Treatment>> CancelTreatmentAsync(CancelTreatmentCommand command);
+    Task<Result<VeterinaryVisit>> RegisterVeterinaryVisitAsync(RegisterVeterinaryVisitCommand command);
+    Task<Result<VeterinaryVisit>> UpdateVeterinaryVisitAsync(UpdateVeterinaryVisitCommand command);
+    Task<Result> DeleteVeterinaryVisitAsync(DeleteVeterinaryVisitCommand command);
+    Task<Result<HealthAlert>> RegisterHealthAlertAsync(RegisterHealthAlertCommand command);
+    Task<Result<HealthAlert>> ResolveHealthAlertAsync(ResolveHealthAlertCommand command);
+    Task<Result> DismissHealthAlertAsync(DismissHealthAlertCommand command);
+    Task<Result<HealthAlert>> AcknowledgeHealthAlertAsync(AcknowledgeHealthAlertCommand command);
+}
+
+public interface IHealthQueryService
+{
+    Task<Result<IReadOnlyCollection<Vaccine>>> GetAllVaccinesAsync(GetAllVaccinesQuery query);
+    Task<Result<Vaccine>> GetVaccineByIdAsync(GetVaccineByIdQuery query);
+    Task<Result<IReadOnlyCollection<Vaccine>>> SearchVaccinesAsync(SearchVaccinesQuery query);
+    Task<Result<IReadOnlyCollection<Vaccine>>> GetVaccinesByDiseaseAsync(GetVaccinesByDiseaseQuery query);
+    Task<Result<IReadOnlyCollection<Vaccine>>> GetVaccinesByRaceAsync(GetVaccinesByRaceQuery query);
+    Task<Result<IReadOnlyCollection<Medication>>> GetAllMedicationsAsync(GetAllMedicationsQuery query);
+    Task<Result<Medication>> GetMedicationByIdAsync(GetMedicationByIdQuery query);
+    Task<Result<IReadOnlyCollection<Medication>>> SearchMedicationsAsync(SearchMedicationsQuery query);
+    Task<Result<IReadOnlyCollection<Medication>>> GetMedicationsByCategoryAsync(GetMedicationsByCategoryQuery query);
+    Task<Result<IReadOnlyCollection<Disease>>> GetAllDiseasesAsync(GetAllDiseasesQuery query);
+    Task<Result<Disease>> GetDiseaseByIdAsync(GetDiseaseByIdQuery query);
+    Task<Result<IReadOnlyCollection<Disease>>> GetDiseasesByRaceAsync(GetDiseasesByRaceQuery query);
+    Task<Result<IReadOnlyCollection<Disease>>> GetDiseasesBySymptomsAsync(GetDiseasesBySymptomsQuery query);
+    Task<Result<IReadOnlyCollection<Diagnosis>>> GetAllDiagnosesAsync(GetAllDiagnosesQuery query);
+    Task<Result<Diagnosis>> GetDiagnosisByIdAsync(GetDiagnosisByIdQuery query);
+    Task<Result<IReadOnlyCollection<Diagnosis>>> GetDiagnosesByAnimalAsync(GetDiagnosesByAnimalQuery query);
+    Task<Result<IReadOnlyCollection<Diagnosis>>> GetDiagnosesByDiseaseAsync(GetDiagnosesByDiseaseQuery query);
+    Task<Result<IReadOnlyCollection<Diagnosis>>> GetRecentDiagnosesAsync(GetRecentDiagnosesQuery query);
+    Task<Result<IReadOnlyCollection<HealthEvent>>> GetHealthCalendarAsync(GetHealthCalendarQuery query);
+    Task<Result<IReadOnlyCollection<HealthEvent>>> GetAllHealthEventsAsync(GetAllHealthEventsQuery query);
+    Task<Result<HealthEvent>> GetHealthEventByIdAsync(GetHealthEventByIdQuery query);
+    Task<Result<IReadOnlyCollection<HealthEvent>>> GetTodaysHealthEventsAsync(GetTodaysHealthEventsQuery query);
+    Task<Result<IReadOnlyCollection<HealthEvent>>> GetUpcomingHealthEventsAsync(GetUpcomingHealthEventsQuery query);
+    Task<Result<IReadOnlyCollection<HealthEvent>>> GetOverdueHealthEventsAsync(GetOverdueHealthEventsQuery query);
+    Task<Result<IReadOnlyCollection<HealthEvent>>> GetHealthEventsByDateRangeAsync(GetHealthEventsByDateRangeQuery query);
+    Task<Result<IReadOnlyCollection<HealthEvent>>> GetHealthEventsByTypeAsync(GetHealthEventsByTypeQuery query);
+    Task<Result<IReadOnlyCollection<HealthEvent>>> GetHealthEventsByAnimalAsync(GetHealthEventsByAnimalQuery query);
+    Task<Result<IReadOnlyCollection<TreatmentDose>>> GetTreatmentDosesAsync(GetTreatmentDosesQuery query);
+    Task<Result<IReadOnlyCollection<Vaccination>>> GetAllVaccinationsAsync(GetAllVaccinationsQuery query);
+    Task<Result<Vaccination>> GetVaccinationByIdAsync(GetVaccinationByIdQuery query);
+    Task<Result<IReadOnlyCollection<Vaccination>>> GetVaccinationsByAnimalAsync(GetVaccinationsByAnimalQuery query);
+    Task<Result<IReadOnlyCollection<Vaccination>>> GetVaccinationsByDateRangeAsync(GetVaccinationsByDateRangeQuery query);
+    Task<Result<IReadOnlyCollection<Vaccination>>> GetUpcomingVaccinationsAsync(GetUpcomingVaccinationsQuery query);
+    Task<Result<IReadOnlyCollection<Treatment>>> GetAllTreatmentsAsync(GetAllTreatmentsQuery query);
+    Task<Result<Treatment>> GetTreatmentByIdAsync(GetTreatmentByIdQuery query);
+    Task<Result<IReadOnlyCollection<Treatment>>> GetTreatmentsByAnimalAsync(GetTreatmentsByAnimalQuery query);
+    Task<Result<IReadOnlyCollection<Treatment>>> GetTreatmentsByDateRangeAsync(GetTreatmentsByDateRangeQuery query);
+    Task<Result<IReadOnlyCollection<VeterinaryVisit>>> GetAllVeterinaryVisitsAsync(GetAllVeterinaryVisitsQuery query);
+    Task<Result<VeterinaryVisit>> GetVeterinaryVisitByIdAsync(GetVeterinaryVisitByIdQuery query);
+    Task<Result<IReadOnlyCollection<VeterinaryVisit>>> GetVeterinaryVisitsByAnimalAsync(GetVeterinaryVisitsByAnimalQuery query);
+    Task<Result<IReadOnlyCollection<VeterinaryVisit>>> GetVeterinaryVisitsByDateRangeAsync(GetVeterinaryVisitsByDateRangeQuery query);
+    Task<Result<IReadOnlyCollection<HealthAlert>>> GetAllHealthAlertsAsync(GetAllHealthAlertsQuery query);
+    Task<Result<HealthAlert>> GetHealthAlertByIdAsync(GetHealthAlertByIdQuery query);
+    Task<Result<IReadOnlyCollection<HealthAlert>>> GetHealthAlertsByAnimalAsync(GetHealthAlertsByAnimalQuery query);
+    Task<Result<IReadOnlyCollection<HealthAlert>>> GetOpenHealthAlertsAsync(GetOpenHealthAlertsQuery query);
+    Task<Result<IReadOnlyCollection<HealthAlert>>> GetHealthAlertsByTypeAsync(GetHealthAlertsByTypeQuery query);
+    Task<Result<IReadOnlyCollection<HealthAlert>>> GetUnacknowledgedHealthAlertsAsync(GetUnacknowledgedHealthAlertsQuery query);
+    Task<Result<IReadOnlyCollection<HealthAlert>>> GetHealthAlertsByPriorityAsync(GetHealthAlertsByPriorityQuery query);
+    Task<Result<IReadOnlyCollection<Vaccination>>> GetOverdueVaccinationsAsync(GetOverdueVaccinationsQuery query);
+    Task<Result<IReadOnlyCollection<Treatment>>> GetTreatmentsByTypeAsync(GetTreatmentsByTypeQuery query);
+    Task<Result<IReadOnlyCollection<Treatment>>> GetActiveTreatmentsAsync(GetActiveTreatmentsQuery query);
+    Task<Result<IReadOnlyCollection<Treatment>>> GetCompletedTreatmentsAsync(GetCompletedTreatmentsQuery query);
+}

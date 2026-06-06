@@ -15,5 +15,8 @@ public enum IamError
     OperationCancelled,
     DatabaseError,
     InternalServerError,
-    ExternalServiceError
+    ExternalServiceError,
+    RoleNotFound,
+    RoleAlreadyExists,
+    InvalidRoleData
 }

@@ -492,4 +492,61 @@ public class ProfileCommandService(
             return Result.Failure(ProfileError.InvalidAvailabilityData);
         }
     }
+
+    public async Task<Result<UserProfile>> UploadAvatarAsync(UploadAvatarCommand command)
+    {
+        try
+        {
+            var profile = await userProfileRepository.FindByUserIdAsync(command.UserId);
+            if (profile == null)
+                return Result<UserProfile>.Failure(ProfileError.ProfileNotFound);
+
+            profile.UpdateAvatar(command.FileName);
+            await unitOfWork.CompleteAsync();
+            return Result<UserProfile>.Success(profile);
+        }
+        catch (Exception)
+        {
+            return Result<UserProfile>.Failure(ProfileError.AvatarUploadFailed);
+        }
+    }
+
+    public async Task<Result> DeleteAvatarAsync(DeleteAvatarCommand command)
+    {
+        try
+        {
+            var profile = await userProfileRepository.FindByUserIdAsync(command.UserId);
+            if (profile == null)
+                return Result.Failure(ProfileError.ProfileNotFound);
+
+            profile.UpdateAvatar(null);
+            await unitOfWork.CompleteAsync();
+            return Result.Success();
+        }
+        catch (Exception)
+        {
+            return Result.Failure(ProfileError.AvatarDeleteFailed);
+        }
+    }
+
+    public async Task<Result> UpdateServiceAreaAsync(UpdateServiceAreaCommand command)
+    {
+        try
+        {
+            var clinic = await clinicRepository.FindByUserIdAsync(command.UserId);
+            if (clinic == null)
+                return Result.Failure(ProfileError.ClinicNotFound);
+
+            clinic.ClearServiceAreaLocations();
+            foreach (var item in command.Locations)
+                clinic.AddServiceAreaLocation(new ServiceAreaLocation(item.Name, item.Address, item.Latitude, item.Longitude));
+
+            await unitOfWork.CompleteAsync();
+            return Result.Success();
+        }
+        catch (Exception)
+        {
+            return Result.Failure(ProfileError.InvalidClinicData);
+        }
+    }
 }

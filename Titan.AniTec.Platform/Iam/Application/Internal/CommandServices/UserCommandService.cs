@@ -140,4 +140,22 @@ public class UserCommandService(
             return Result.Failure(IamError.DatabaseError, localizer[nameof(IamError.DatabaseError)]);
         }
     }
+
+    public async Task<Result> Handle(DeleteUserCommand command, CancellationToken cancellationToken)
+    {
+        var user = await userRepository.FindByIdAsync(command.UserId, cancellationToken);
+        if (user == null)
+            return Result.Failure(IamError.UserNotFound, localizer[nameof(IamError.UserNotFound)]);
+
+        try
+        {
+            userRepository.Remove(user);
+            await unitOfWork.CompleteAsync(cancellationToken);
+            return Result.Success();
+        }
+        catch (DbUpdateException)
+        {
+            return Result.Failure(IamError.DatabaseError, localizer[nameof(IamError.DatabaseError)]);
+        }
+    }
 }

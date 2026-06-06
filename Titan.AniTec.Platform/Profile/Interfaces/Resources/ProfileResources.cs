@@ -30,3 +30,6 @@ public record ServiceAreaLocationResource(int Id, string Name, string? Address, 
 public record CreateServiceAreaLocationResource(string Name, string? Address, double? Latitude, double? Longitude);
 public record AvailabilityItemResource(DayOfWeek DayOfWeek, TimeSpan StartTime, TimeSpan EndTime, bool IsAvailable);
 public record UpdateAvailabilityResource(IReadOnlyCollection<AvailabilityItemResource> Availabilities);
+public record AvatarUploadResource(string AvatarUrl);
+public record UpdateServiceAreaResource(IReadOnlyCollection<ServiceAreaLocationItemResource> Locations);
+public record ServiceAreaLocationItemResource(string Name, string? Address, double? Latitude, double? Longitude);

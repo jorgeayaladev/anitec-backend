@@ -11,4 +11,5 @@ public interface IUserCommandService
     Task<Result> Handle(ChangePasswordCommand command, CancellationToken cancellationToken);
     Task<Result> Handle(UpdateUserStatusCommand command, CancellationToken cancellationToken);
     Task<Result> Handle(UpdateUserRoleCommand command, CancellationToken cancellationToken);
+    Task<Result> Handle(DeleteUserCommand command, CancellationToken cancellationToken);
 }

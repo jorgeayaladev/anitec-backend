@@ -29,6 +29,9 @@ public interface IProfileCommandService
     Task<Result<ServiceAreaLocation>> AddServiceAreaLocationAsync(AddServiceAreaLocationCommand command);
     Task<Result> RemoveServiceAreaLocationAsync(RemoveServiceAreaLocationCommand command);
     Task<Result> UpdateAvailabilityAsync(UpdateAvailabilityCommand command);
+    Task<Result<UserProfile>> UploadAvatarAsync(UploadAvatarCommand command);
+    Task<Result> DeleteAvatarAsync(DeleteAvatarCommand command);
+    Task<Result> UpdateServiceAreaAsync(UpdateServiceAreaCommand command);
 }
 
 public interface IProfileQueryService

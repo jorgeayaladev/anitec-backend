@@ -128,4 +128,12 @@ public class ClinicController(
         var result = await commandService.UpdateAvailabilityAsync(command);
         return ProfileActionResultAssembler.ToActionResult(result);
     }
+
+    [HttpPut("clinic/service-area")]
+    public async Task<IActionResult> UpdateServiceArea([FromBody] UpdateServiceAreaResource resource)
+    {
+        var command = ProfileAssembler.ToCommand(CurrentUserId, resource);
+        var result = await commandService.UpdateServiceAreaAsync(command);
+        return ProfileActionResultAssembler.ToActionResult(result);
+    }
 }

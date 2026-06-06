@@ -49,3 +49,5 @@ public record AvailabilityItem(DayOfWeek DayOfWeek, TimeSpan StartTime, TimeSpan
 
 public record UploadAvatarCommand(int UserId, byte[] ImageData, string FileName);
 public record DeleteAvatarCommand(int UserId);
+public record UpdateServiceAreaCommand(int UserId, IReadOnlyCollection<ServiceAreaLocationItem> Locations);
+public record ServiceAreaLocationItem(string Name, string? Address, double? Latitude, double? Longitude);
